@@ -42,3 +42,10 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+/lib/ui/todo_editor/todo_editor_state.freezed.dart
+/lib/ui/todo_editor/todo_editor_view_model.g.dart
+/lib/data/model/todo.freezed.dart
+/lib/app_container.g.dart
+/lib/data/model/todo.g.dart
+/lib/ui/todo_list/todo_list_state.freezed.dart
+/lib/ui/todo_list/todo_list_view_model.g.dart
