@@ -30,7 +30,7 @@ class TodoEditorScreen extends ConsumerWidget {
         child: TodoEditorBody(
           viewModel: viewModel,
           state: state,
-          onSavePressed: _navigateBack,
+          onSaved: _navigateBack,
         ),
       ),
     );

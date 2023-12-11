@@ -29,16 +29,7 @@ class TodoEditorViewModel extends _$TodoEditorViewModel {
     state = state.copyWith(memo: memo);
   }
 
-  bool isWritable() {
-    bool result = true;
-
-    if((state.title == '') ||
-        (state.memo == '')) {
-      result = false;
-    }
-
-    return result;
-  }
+  bool isWritable() => (state.title != '') && (state.memo != '');
 
   Future<void> saveTodo({
     Function(int id)? onSuccess,

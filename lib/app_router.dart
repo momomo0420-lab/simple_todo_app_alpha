@@ -47,7 +47,12 @@ class AppRouter extends StatelessWidget {
         GoRoute(
           path: AppScreens.todoEditor.path,
           builder: (context, state) => TodoEditorScreen(
-            navigateBack: () => context.pushReplacement(AppScreens.todoList.path),
+            navigateBack: () {
+              while(context.canPop()) {
+                context.pop();
+              }
+              context.pushReplacement(AppScreens.todoList.path);
+            },
             todo: state.extra as Todo?,
           ),
         ),

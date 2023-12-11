@@ -8,16 +8,16 @@ class TodoEditorBody extends StatefulWidget {
   final TodoEditorViewModel _viewModel;
   final TodoEditorState _state;
 
-  final Function()? _onSavePressed;
+  final Function()? _onSaved;
 
   const TodoEditorBody({
     super.key,
     required TodoEditorViewModel viewModel,
     required TodoEditorState state,
-    Function()? onSavePressed,
+    Function()? onSaved,
   }): _viewModel = viewModel,
         _state = state,
-        _onSavePressed = onSavePressed;
+        _onSaved = onSaved;
 
   @override
   State<TodoEditorBody> createState() => _TodoEditorBodyState();
@@ -48,7 +48,7 @@ class _TodoEditorBodyState extends State<TodoEditorBody> {
   @override
   Widget build(BuildContext context) {
     final viewModel = widget._viewModel;
-    final onSavePressed = widget._onSavePressed;
+    final onSaved = widget._onSaved;
 
     return Column(
       children: [
@@ -73,9 +73,9 @@ class _TodoEditorBodyState extends State<TodoEditorBody> {
           child: ElevatedButton(
             onPressed: !viewModel.isWritable() ? null :
               () => viewModel.saveTodo(
-                onSuccess: (int id) {
-                  if(onSavePressed != null) onSavePressed();
-                },
+                onSuccess: (_) {
+                  if(onSaved != null) onSaved();
+                }
               ),
             child: const Text('保存'),
           ),
