@@ -16,8 +16,8 @@ class TodoRepositoryImpl implements TodoRepository {
   }
 
   @override
-  Future<void> update(int id, Todo todo) async {
-    await _dao.update(id, todo.toJson());
+  Future<int> update(Todo todo) async {
+    return await _dao.update(todo.id!, todo.toJson());
   }
 
   @override

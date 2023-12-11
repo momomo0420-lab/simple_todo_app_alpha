@@ -1,22 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:simple_todo_app_alpha/data/model/todo.dart';
 import 'package:simple_todo_app_alpha/ui/todo_list/todo_list_body.dart';
 import 'package:simple_todo_app_alpha/ui/todo_list/todo_list_view_model.dart';
 
+/// Todoリスト画面
 class TodoListScreen extends ConsumerWidget {
-  final Function()? _onFabPressed;
-  final Function(int)? _navigateToDetail;
+  /// Todo登録画面への遷移処理
+  final Function()? _navigateToEntry;
+  final Function(Todo)? _navigateToUpdate;
 
+  /// Todoリスト画面を生成します。
+  ///
+  /// FABが押下された場合の遷移先を[navigateToEntry]に登録します。
   const TodoListScreen({
     super.key,
-    Function()? onFabPressed,
-    Function(int)? navigateToDetail,
-  }): _onFabPressed = onFabPressed,
-        _navigateToDetail = navigateToDetail;
+    Function()? navigateToEntry,
+    Function(Todo)? navigateToUpdate,
+  }): _navigateToEntry = navigateToEntry,
+        _navigateToUpdate = navigateToUpdate;
 
+  /// Todoリスト画面を作成します。
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // 状態
     final state = ref.watch(todoListViewModelProvider);
+    // ビューモデル
     final viewModel = ref.watch(todoListViewModelProvider.notifier);
 
     return Scaffold(
@@ -30,12 +39,12 @@ class TodoListScreen extends ConsumerWidget {
         child: TodoListBody(
           state: state,
           viewModel: viewModel,
-          navigateToDetail: _navigateToDetail,
+          onTodoTap: _navigateToUpdate,
         ),
       ),
 
       floatingActionButton: FloatingActionButton(
-        onPressed: _onFabPressed,
+        onPressed: _navigateToEntry,
         child: const Icon(Icons.add),
       ),
     );

@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:simple_todo_app_alpha/data/model/todo.dart';
 import 'package:simple_todo_app_alpha/ui/todo_editor/todo_editor_body.dart';
 import 'package:simple_todo_app_alpha/ui/todo_editor/todo_editor_view_model.dart';
 
 class TodoEditorScreen extends ConsumerWidget {
-  final Function()? _navigateToNextScreen;
+  final Function()? _navigateBack;
+  final Todo? _todo;
 
   const TodoEditorScreen({
     super.key,
-    Function()? navigateToNextScreen,
-  }): _navigateToNextScreen = navigateToNextScreen;
+    Function()? navigateBack,
+    Todo? todo,
+  }): _navigateBack = navigateBack,
+        _todo = todo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModel = ref.watch(todoEditorViewModelProvider.notifier);
-    final state = ref.watch(todoEditorViewModelProvider);
+    final viewModel = ref.watch(todoEditorViewModelProvider(_todo).notifier);
+    final state = ref.watch(todoEditorViewModelProvider(_todo));
 
     return Scaffold(
       appBar: AppBar(
@@ -26,7 +30,7 @@ class TodoEditorScreen extends ConsumerWidget {
         child: TodoEditorBody(
           viewModel: viewModel,
           state: state,
-          navigateNextScreen: _navigateToNextScreen,
+          onSavePressed: _navigateBack,
         ),
       ),
     );

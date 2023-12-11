@@ -8,8 +8,13 @@ part 'todo_editor_view_model.g.dart';
 @riverpod
 class TodoEditorViewModel extends _$TodoEditorViewModel {
   @override
-  TodoEditorState build() {
-    return const TodoEditorState();
+  TodoEditorState build(Todo? todo) {
+    return TodoEditorState(
+      id: todo?.id,
+      title: todo?.title ?? "",
+      memo: todo?.memo ?? "",
+      isUpdate: todo != null,
+    );
   }
 
   void setTitle(String title) {
@@ -43,11 +48,18 @@ class TodoEditorViewModel extends _$TodoEditorViewModel {
     if(onLoading != null) onLoading();
 
     final repository = await ref.read(todoRepositoryProvider.future);
+    int id = 0;
     final todo = Todo(
+      id: state.id,
       title: state.title,
       memo: state.memo,
     );
-    final id = await repository.insert(todo);
+
+    if(state.isUpdate) {
+      id = await repository.update(todo);
+    } else {
+      id = await repository.insert(todo);
+    }
 
     if(onSuccess != null) onSuccess(id);
   }

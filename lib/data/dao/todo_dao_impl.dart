@@ -19,8 +19,8 @@ class TodoDaoImpl implements TodoDao {
   }
 
   @override
-  Future<void> update(int id, Map<String, dynamic> todo) async {
-    await _db.update(
+  Future<int> update(int id, Map<String, dynamic> todo) async {
+    return await _db.update(
       DatabaseHelper.tableName,
       todo,
       where: 'id = ?',
@@ -43,16 +43,5 @@ class TodoDaoImpl implements TodoDao {
       DatabaseHelper.tableName,
       orderBy: '${TodoDatabaseColumns.id.column} DESC',
     );
-  }
-
-  @override
-  Future<Map<String, dynamic>> findBy(int id) async {
-    final row = await _db.query(
-      DatabaseHelper.tableName,
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-
-    return row.first;
   }
 }
