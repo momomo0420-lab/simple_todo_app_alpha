@@ -37,7 +37,7 @@ class _TodoListBodyState extends State<TodoListBody> {
     final todoList = state.todoList;
 
     if(todoList == null) {
-      return const Center(child: Text('Now Loading...'));
+      return const Center(child: CircularProgressIndicator());
     }
 
     return buildTodoList(

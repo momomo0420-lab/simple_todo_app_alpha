@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:simple_todo_app_alpha/data/model/todo.dart';
 import 'package:simple_todo_app_alpha/ui/todo_editor/todo_editor_body.dart';
-import 'package:simple_todo_app_alpha/ui/todo_editor/todo_editor_state.dart';
 import 'package:simple_todo_app_alpha/ui/todo_editor/todo_editor_view_model.dart';
 
 /// Todoエディタ画面
-class TodoEditorScreen extends StatelessWidget {
-  // 状態
-  final TodoEditorState _state;
-  // ビューモデル
-  final TodoEditorViewModel _viewModel;
+class TodoEditorScreen extends ConsumerWidget {
+  // Todoアイテム
+  final Todo? _todo;
   // 登録完了後の処理
   final Function()? _navigateBack;
 
@@ -18,17 +16,17 @@ class TodoEditorScreen extends StatelessWidget {
   /// Todoの登録後、[navigateBack]を実行します。
   const TodoEditorScreen({
     super.key,
-    required TodoEditorState state,
-    required TodoEditorViewModel viewModel,
-    Function()? navigateBack,
     Todo? todo,
-  }): _state = state,
-        _viewModel = viewModel,
+    Function()? navigateBack,
+  }): _todo = todo,
         _navigateBack = navigateBack;
 
   /// メイン
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(todoEditorViewModelProvider(_todo));
+    final viewModel = ref.watch(todoEditorViewModelProvider(_todo).notifier);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -37,8 +35,8 @@ class TodoEditorScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: TodoEditorBody(
-          viewModel: _viewModel,
-          state: _state,
+          viewModel: viewModel,
+          state: state,
           onSaved: _navigateBack,
         ),
       ),
