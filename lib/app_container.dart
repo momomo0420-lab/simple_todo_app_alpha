@@ -15,6 +15,6 @@ Future<TodoDao> todoDao(TodoDaoRef ref) async {
 
 @riverpod
 Future<TodoRepository> todoRepository(TodoRepositoryRef ref) async {
-  final dao = await ref.read(todoDaoProvider.future);
+  final dao = await ref.watch(todoDaoProvider.future);
   return TodoRepositoryImpl(dao: dao);
 }

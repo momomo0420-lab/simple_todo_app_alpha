@@ -2,9 +2,14 @@ import 'package:simple_todo_app_alpha/data/dao/todo_dao.dart';
 import 'package:simple_todo_app_alpha/data/database/database_helper.dart';
 import 'package:sqflite/sqflite.dart';
 
+/// Todoを扱うデータベースのDAO（実装）
 class TodoDaoImpl implements TodoDao {
+  /// データベース
   final Database _db;
 
+  /// Todoを扱うデータベースのDAOを生成する。
+  ///
+  /// [db]に使用するデータベースを登録しておく。
   const TodoDaoImpl({
     required Database db,
   }): _db = db;
@@ -41,7 +46,7 @@ class TodoDaoImpl implements TodoDao {
   Future<List<Map<String, dynamic>>> findAll() async {
     return await _db.query(
       DatabaseHelper.tableName,
-      orderBy: '${TodoDatabaseColumns.id.column} DESC',
+      orderBy: '${TodoTableColumns.id.column} DESC',
     );
   }
 }

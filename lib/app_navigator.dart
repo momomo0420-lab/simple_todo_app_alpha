@@ -6,6 +6,7 @@ import 'package:simple_todo_app_alpha/ui/todo_editor/todo_editor_view_model.dart
 import 'package:simple_todo_app_alpha/ui/todo_list/todo_list_screen.dart';
 import 'package:simple_todo_app_alpha/ui/todo_list/todo_list_view_model.dart';
 
+/// 全画面の定義クラス
 enum AppScreens {
   todoList('/todo_list'),
   todoEntry('/todo_entry'),
@@ -17,7 +18,9 @@ enum AppScreens {
   const AppScreens(this.path);
 }
 
+/// 画面のナビゲーションクラス
 class AppNavigator extends ConsumerWidget {
+  /// 画面のナビゲーションを生成する。
   const AppNavigator({super.key});
 
   @override
@@ -29,15 +32,18 @@ class AppNavigator extends ConsumerWidget {
         useMaterial3: true,
       ),
       routes: <String, WidgetBuilder> {
-        AppScreens.todoList.path : (BuildContext context) => buildTodoList(context, ref),
-        AppScreens.todoEntry.path : (BuildContext context) => buildTodoEntry(context, ref),
-        AppScreens.todoUpdate.path : (BuildContext context) => buildTodoUpdate(context, ref),
+        AppScreens.todoList.path : (BuildContext context) => _buildTodoList(context, ref),
+        AppScreens.todoEntry.path : (BuildContext context) => _buildTodoEntry(context, ref),
+        AppScreens.todoUpdate.path : (BuildContext context) => _buildTodoUpdate(context, ref),
       },
       initialRoute: AppScreens.todoList.path,
     );
   }
 
-  Widget buildTodoList(
+  /// Todoリスト画面を作成する。
+  ///
+  ///[context]と[ref]を使用し必要なパラメータを取得する。
+  Widget _buildTodoList(
     BuildContext context,
     WidgetRef ref,
   ) {
@@ -55,7 +61,10 @@ class AppNavigator extends ConsumerWidget {
     );
   }
 
-  Widget buildTodoEntry(
+  /// Todo登録画面を作成する。
+  ///
+  ///[context]と[ref]を使用し必要なパラメータを取得する。
+  Widget _buildTodoEntry(
     BuildContext context,
     WidgetRef ref,
   ) {
@@ -72,7 +81,11 @@ class AppNavigator extends ConsumerWidget {
     );
   }
 
-  Widget buildTodoUpdate(
+  /// Todo更新画面を作成する。
+  ///
+  ///[context]と[ref]を使用し必要なパラメータを取得する。
+  /// ※現状登録画面を流用しています。
+  Widget _buildTodoUpdate(
     BuildContext context,
     WidgetRef ref,
   ) {

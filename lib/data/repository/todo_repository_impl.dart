@@ -2,9 +2,14 @@ import 'package:simple_todo_app_alpha/data/dao/todo_dao.dart';
 import 'package:simple_todo_app_alpha/data/model/todo.dart';
 import 'package:simple_todo_app_alpha/data/repository/todo_repository.dart';
 
+/// Todoリポジトリ（実装）
 class TodoRepositoryImpl implements TodoRepository {
+  // Dao
   final TodoDao _dao;
 
+  /// Todoリポジトリを生成する。
+  ///
+  /// データベース操作を行う[dao]を登録しておく。
   const TodoRepositoryImpl({
     required TodoDao dao,
   }): _dao = dao;

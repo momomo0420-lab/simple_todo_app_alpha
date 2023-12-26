@@ -18,7 +18,7 @@ class TodoEditorViewModel extends _$TodoEditorViewModel {
       id: todo?.id,
       title: todo?.title ?? "",
       memo: todo?.memo ?? "",
-      isUpdate: todo != null,
+      isUpdate: todo?.id != null,
     );
   }
 
