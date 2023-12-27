@@ -39,7 +39,7 @@ class AppNavigator extends StatelessWidget {
 
   /// Todoリスト画面を作成する。
   ///
-  ///[context]と[ref]を使用し必要なパラメータを取得する。
+  /// 遷移時のパラメータとして[context]を使用する。
   Widget _buildTodoList(
     BuildContext context,
   ) {
@@ -54,7 +54,7 @@ class AppNavigator extends StatelessWidget {
 
   /// Todo登録画面を作成する。
   ///
-  ///[context]と[ref]を使用し必要なパラメータを取得する。
+  /// 遷移時のパラメータとして[context]を使用する。
   Widget _buildTodoEntry(
     BuildContext context,
   ) {
@@ -68,7 +68,7 @@ class AppNavigator extends StatelessWidget {
 
   /// Todo更新画面を作成する。
   ///
-  ///[context]と[ref]を使用し必要なパラメータを取得する。
+  /// 遷移時のパラメータとして[context]を使用する。
   /// ※現状登録画面を流用しています。
   Widget _buildTodoUpdate(
     BuildContext context,

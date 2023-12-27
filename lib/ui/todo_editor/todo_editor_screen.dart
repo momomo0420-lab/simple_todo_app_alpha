@@ -4,16 +4,17 @@ import 'package:simple_todo_app_alpha/data/model/todo.dart';
 import 'package:simple_todo_app_alpha/ui/todo_editor/todo_editor_body.dart';
 import 'package:simple_todo_app_alpha/ui/todo_editor/todo_editor_view_model.dart';
 
-/// Todoエディタ画面
+/// Todo編集画面
 class TodoEditorScreen extends ConsumerWidget {
   // Todoアイテム
   final Todo? _todo;
   // 登録完了後の処理
   final Function()? _navigateBack;
 
-  /// Todoエディタ画面を生成します。
+  /// Todo編集画面を生成する。
   ///
-  /// Todoの登録後、[navigateBack]を実行します。
+  /// [todo]がnullの場合は登録処理を、データが存在する場合は更新処理を行う。
+  /// Todoの登録後、[navigateBack]を実行する。
   const TodoEditorScreen({
     super.key,
     Todo? todo,
@@ -21,10 +22,11 @@ class TodoEditorScreen extends ConsumerWidget {
   }): _todo = todo,
         _navigateBack = navigateBack;
 
-  /// メイン
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // 状態
     final state = ref.watch(todoEditorViewModelProvider(_todo));
+    // ビューモデル
     final viewModel = ref.watch(todoEditorViewModelProvider(_todo).notifier);
 
     return Scaffold(

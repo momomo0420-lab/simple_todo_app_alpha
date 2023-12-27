@@ -7,25 +7,25 @@ part 'todo_list_view_model.g.dart';
 /// Todoリスト画面のビューモデル
 @riverpod
 class TodoListViewModel extends _$TodoListViewModel {
-  /// このビューモデルは[TodoListState]を状態として使用します。
+  /// Todo編集画面のビューモデルで使用する状態を作成する。
   @override
   TodoListState build() {
     return const TodoListState();
   }
 
-  /// Todoリストを取得します。
+  /// Todoリストを取得する。
   ///
-  /// 現状、登録されているTodoリストを全件取得します。
+  /// 現状、登録されているTodoリストを全件取得する。
   Future<void> loadTodoList() async {
     final repository = await ref.read(todoRepositoryProvider.future);
     final todoList = await repository.findAll();
     state = state.copyWith(todoList: todoList);
   }
 
-  /// Todoリストを削除します。
+  /// Todoリストを削除する。
   ///
-  /// [id]に対応するTodoリストを削除します。
-  /// その後、Todoリストを更新します。
+  /// 主キー（[id]）に対応するTodoリストを削除する。
+  /// その後、Todoリストを更新する。
   Future<void> deleteTodo(int id) async {
     final repository = await ref.read(todoRepositoryProvider.future);
     await repository.deleteBy(id);

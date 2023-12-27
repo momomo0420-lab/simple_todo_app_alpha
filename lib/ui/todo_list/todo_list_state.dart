@@ -6,7 +6,7 @@ part 'todo_list_state.freezed.dart';
 /// Todoリスト画面の状態
 @freezed
 class TodoListState with _$TodoListState {
-  /// Todoリスト画面の状態を生成します
+  /// Todoリスト画面の状態を生成する。
   const factory TodoListState({
     /// Todoリスト
     @Default(null)

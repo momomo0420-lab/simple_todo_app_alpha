@@ -2,14 +2,14 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'todo_editor_state.freezed.dart';
 
-/// Todoエディタ画面の状態
+/// Todo編集画面の状態
 @freezed
 class TodoEditorState with _$TodoEditorState {
-  /// Todoエディタ画面の状態を保存します。
+  /// Todo編集画面の状態を保持する。
   ///
-  /// [id]にはデータベース登録用の主キーを設定します。nullの場合は自動で主キーが設定されます。
-  /// [title][memo]にはTodoのタイトルとメモをそれぞれ設定します。
-  /// [isUpdate]は処理が初期登録なのか？更新なのか？を設定します。
+  /// [id]にはデータベース登録用の主キーを設定する。nullの場合は自動で主キーが設定される。
+  /// [title]、[memo]にはTodoのタイトルとメモをそれぞれ設定する。
+  /// [isUpdate]は処理が初期登録なのか？更新なのか？を設定する。（trueの場合は更新）
   const factory TodoEditorState ({
     @Default(null)
     int? id,

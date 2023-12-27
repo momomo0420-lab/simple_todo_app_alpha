@@ -5,13 +5,13 @@ import 'package:simple_todo_app_alpha/ui/todo_editor/todo_editor_state.dart';
 
 part 'todo_editor_view_model.g.dart';
 
-/// Todoエディタ画面のビューモデル
+/// Todo編集画面のビューモデル
 @riverpod
 class TodoEditorViewModel extends _$TodoEditorViewModel {
 
-  /// Todoエディタ画面のビューモデルで使用する状態を作成します。
+  /// Todo編集画面のビューモデルで使用する状態を作成する。
   ///
-  /// 更新の場合は状態[TodoEditorState]に[todo]を設定します。
+  /// 更新の場合は[TodoEditorState]に[todo]を設定する。
   @override
   TodoEditorState build(Todo? todo) {
     return TodoEditorState(
@@ -22,43 +22,44 @@ class TodoEditorViewModel extends _$TodoEditorViewModel {
     );
   }
 
-  /// 状態に[title]を設定します。
+  /// 状態に[title]を設定する。
   ///
-  /// 状態が変更されるためUIの再描画が行われます。
+  /// 状態が変更されるためUIの再描画が行われる。
   void setTitle(String title) {
     state = state.copyWith(title: title);
   }
 
-  /// 状態に設定されているタイトルを初期化します。
+  /// 状態に設定されているタイトルを初期化する。
   ///
-  /// 状態が変更されるためUIの再描画が行われます。
+  /// 状態が変更されるためUIの再描画が行われる。
   void clearTitle() {
     setTitle('');
   }
 
-  /// 状態に[memo]を設定します。
+  /// 状態に[memo]を設定する。
   ///
-  /// 状態が変更されるためUIの再描画が行われます。
+  /// 状態が変更されるためUIの再描画が行われる。
   void setMemo(String memo) {
     state = state.copyWith(memo: memo);
   }
 
-  /// Todoがデータベースに書き込み可能か判定します。
+  /// Todoがデータベースに書き込み可能か判定する。
   bool isWritable() => (state.title != '') && (state.memo != '');
 
-  /// Todoをデータベースに初期登録します。
+  /// Todoをデータベースに初期登録する。
   ///
-  /// 登録が行われる前に[onLoading]が実行されます。
-  /// 登録が成功した場合、[onSuccess]を実行します。
-  /// この時、データベースに登録した際の主キー[id]を返却します。
-  /// 登録が失敗した場合、[onFailure]を実行します。※現状これが実行されることはありません。
+  /// 登録が行われる前に[onLoading]が実行され、成功した場合に[onSuccess]を実行する。
+  /// この時、データベースに登録した際の主キー（[id]）を返却する。
+  /// 登録が失敗した場合、[onFailure]を実行する。※現状、失敗が実行されることはありません。
   Future<void> entryTodo({
     Function(int id)? onSuccess,
     Function()? onLoading,
     Function()? onFailure,
   }) async {
+    // 開始処理
     if(onLoading != null) onLoading();
 
+    // データベースへの登録
     final repository = await ref.read(todoRepositoryProvider.future);
     final todo = Todo(
       title: state.title,
@@ -66,22 +67,24 @@ class TodoEditorViewModel extends _$TodoEditorViewModel {
     );
     final id = await repository.insert(todo);
 
+    // 終了処理
     if(onSuccess != null) onSuccess(id);
   }
 
-  /// データベース上のTodoを更新します。
+  /// データベース上のTodoを更新する。
   ///
-  /// 更新が行われる前に[onLoading]が実行されます。
-  /// 更新が成功した場合、[onSuccess]を実行します。
-  /// この時、データベースに登録した際の主キー[id]を返却します。
-  /// 更新が失敗した場合、[onFailure]を実行します。※現状これが実行されることはありません。
+  /// 更新が行われる前に[onLoading]が実行され、成功した場合に[onSuccess]を実行する。
+  /// この時、データベースに登録した際の主キー（[id]）を返却する。
+  /// 更新が失敗した場合、[onFailure]を実行する。※現状、失敗実行されることはありません。
   Future<void> updateTodo({
     Function(int id)? onSuccess,
     Function()? onLoading,
     Function()? onFailure,
   }) async {
+    // 開始処理
     if(onLoading != null) onLoading();
 
+    // 登録内容の更新
     final repository = await ref.read(todoRepositoryProvider.future);
     final todo = Todo(
       id: state.id!,
@@ -90,6 +93,7 @@ class TodoEditorViewModel extends _$TodoEditorViewModel {
     );
     final id = await repository.update(todo);
 
+    // 終了処理
     if(onSuccess != null) onSuccess(id);
   }
 }

@@ -19,7 +19,7 @@ enum TodoTableColumns {
 
 /// データベースのヘルパークラス
 ///
-/// このクラスはシングルトンで扱います。
+/// このクラスはシングルトンで扱う。
 class DatabaseHelper {
   // シングルトン
   DatabaseHelper._();

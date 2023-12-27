@@ -11,9 +11,10 @@ class TodoListScreen extends ConsumerWidget {
   // Todo更新画面への遷移処理
   final Function(Todo)? _navigateToUpdate;
 
-  /// Todoリスト画面を生成します。
+  /// Todoリスト画面を生成する。
   ///
-  /// FABが押下された場合の遷移先を[navigateToEntry]に登録します。
+  /// FABが押下された場合、[navigateToEntry]を実行する。
+  /// またTodoが押下された場合、[navigateToUpdate]を実行する。
   const TodoListScreen({
     super.key,
     Function()? navigateToEntry,
@@ -21,10 +22,11 @@ class TodoListScreen extends ConsumerWidget {
   }): _navigateToEntry = navigateToEntry,
         _navigateToUpdate = navigateToUpdate;
 
-  /// Todoリスト画面を作成します。
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // 状態
     final state = ref.watch(todoListViewModelProvider);
+    // ビューモデル
     final viewModel = ref.watch(todoListViewModelProvider.notifier);
 
     return Scaffold(
