@@ -1,16 +1,21 @@
-# simple_todo_app_alpha
+# シンプルTODOアプリ
 
-A new Flutter project.
+本コードでは簡単なTODOアプリを作成します。
+本コードにて以下が理解できるかもしれません。
 
-## Getting Started
+    ・flutterによるUI作成
+    ・Riverpodによる状態管理
+    ・freezedによるデータクラス作成
 
-This project is a starting point for a Flutter application.
+なお、作成者自身もまだflutter勉強中です。
+そのため内容に誤りがあるかもしれません。
+改善点がありましたらXにてご連絡頂けるとありがたいです。
 
-A few resources to get you started if this is your first Flutter project:
+## 前提条件
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+    ・AndroidStudioによる開発環境が揃っている
+        →出来ていること前提。
+        　「flutter 環境構築」等で検索すれば動画や記事がたくさん出てくると思います。
+        　アプリを起動するエミュレータも同様です。
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+    ・
