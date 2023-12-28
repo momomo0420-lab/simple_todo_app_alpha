@@ -5,11 +5,15 @@ import 'package:simple_todo_app_alpha/ui/todo_list/todo_list_screen.dart';
 
 /// 全画面の定義クラス
 enum AppScreens {
+  /// Todoリスト画面
   todoList('/todo_list'),
+  /// Todo登録画面
   todoEntry('/todo_entry'),
+  /// Todo更新画面
   todoUpdate('/todo_update'),
   ;
 
+  /// パス
   final String path;
 
   const AppScreens(this.path);
@@ -73,6 +77,7 @@ class AppNavigator extends StatelessWidget {
   Widget _buildTodoUpdate(
     BuildContext context,
   ) {
+    // 前の画面で選択されたTodoを取得する。
     final todo = ModalRoute.of(context)?.settings.arguments as Todo?;
 
     return TodoEditorScreen(

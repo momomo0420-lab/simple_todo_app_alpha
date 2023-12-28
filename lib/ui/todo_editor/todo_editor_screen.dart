@@ -32,7 +32,7 @@ class TodoEditorScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('TODO作成画面'),
+        title: _buildTitleText(state.isUpdate),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -43,5 +43,22 @@ class TodoEditorScreen extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  /// タイトルに表示するテキストを作成する。
+  ///
+  /// [isUpdate]の内容を使用し、タイトルを決定する。
+  Text _buildTitleText(bool isUpdate) {
+    // タイトル
+    late final Text title;
+    
+    // タイトルに表示する文字を決定する。
+    if(isUpdate) {
+      title = const Text('TODO更新画面');
+    } else {
+      title = const Text('TODO登録画面');
+    }
+
+    return title;
   }
 }

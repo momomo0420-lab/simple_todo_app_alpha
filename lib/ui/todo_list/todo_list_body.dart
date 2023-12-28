@@ -30,7 +30,6 @@ class TodoListBody extends StatefulWidget {
 }
 
 class _TodoListBodyState extends State<TodoListBody> {
-
   @override
   void initState() {
     super.initState();
@@ -50,16 +49,19 @@ class _TodoListBodyState extends State<TodoListBody> {
     // Todo押下時の動作
     final onTodoTap = widget._onTodoTap;
 
-    // Todoの読み込みが完了していない場合はグルグルを表示する。
+    // Todoの読み込みが完了していない場合、グルグルを表示する。
     if(todoList == null) {
       return const Center(child: CircularProgressIndicator());
     }
 
-    // Todoリストを表示する。
+    // Todoリストを作成し返却する。
     return _buildTodoList(
       todoList,
       onTap: onTodoTap,
-      onDelete: (id) => viewModel.deleteTodo(id),
+      onDelete: (id) => viewModel.deleteTodo(
+        id,
+        onSuccess: () => viewModel.loadTodoList(),
+      ),
     );
   }
 

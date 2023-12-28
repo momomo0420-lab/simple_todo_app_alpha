@@ -16,7 +16,7 @@ class OneLineTextField extends StatelessWidget {
   /// 一行の入力フォームを生成する。
   ///
   /// [controller]に入力用のコントローラを設定する（必須）。
-  /// [label]、[hint]にフォームに表示されるラベルとヒントを設定する。
+  /// [label]、[hint]にはフォームに表示されるラベルとヒントを設定する。
   /// [onChanged]は入力された際の動作を登録する。[value]には入力された文字列が渡される。
   /// [onClear]はフォームの文字列がクリアされた際の動作を登録する。
   const OneLineTextField({
