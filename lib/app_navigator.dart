@@ -33,11 +33,12 @@ class AppNavigator extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      routerConfig: buildGoRouter(),
+      routerConfig: _buildGoRouter(),
     );
   }
 
-  GoRouter buildGoRouter() {
+  /// 画面遷移のための構成を作成します。
+  GoRouter _buildGoRouter() {
     return GoRouter(
       initialLocation: AppScreens.todoList.path,
       routes: [
@@ -59,7 +60,7 @@ class AppNavigator extends StatelessWidget {
 
   /// Todoリスト画面を作成する。
   ///
-  /// 遷移時のパラメータとして[context]を使用する。
+  /// 遷移時のパラメータとして[context]、[state]を使用する。
   Widget _buildTodoList(
     BuildContext context,
     GoRouterState state,
@@ -75,7 +76,7 @@ class AppNavigator extends StatelessWidget {
 
   /// Todo登録画面を作成する。
   ///
-  /// 遷移時のパラメータとして[context]を使用する。
+  /// 遷移時のパラメータとして[context]、[state]を使用する。
   Widget _buildTodoEntry(
     BuildContext context,
     GoRouterState state,
@@ -87,7 +88,7 @@ class AppNavigator extends StatelessWidget {
 
   /// Todo更新画面を作成する。
   ///
-  /// 遷移時のパラメータとして[context]を使用する。
+  /// 遷移時のパラメータとして[context]、[state]を使用する。
   /// ※現状登録画面を流用しています。
   Widget _buildTodoUpdate(
     BuildContext context,

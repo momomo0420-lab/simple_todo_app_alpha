@@ -35,6 +35,10 @@ class TodoListBody extends StatelessWidget {
     );
   }
 
+  /// 読み込んだデータを元にTodoリスト画面を作成する。
+  ///
+  /// [state]の読み込みが完了している場合、そのデータを使用し、
+  /// Todoリストを作成する。
   Widget buildDataWidget(TodoListState state) {
     return _buildTodoList(
       state.todoList,
@@ -43,12 +47,14 @@ class TodoListBody extends StatelessWidget {
     );
   }
 
+  /// ローディング画面を作成する。
   Widget buildLoadingWidget() {
     return const Center(
       child: CircularProgressIndicator(),
     );
   }
 
+  /// エラー時の画面を作成する。
   Widget buildErrorWidget(Object error, StackTrace stackTrace) {
     return const Center(
       child: Text('読み込みに失敗しました。'),

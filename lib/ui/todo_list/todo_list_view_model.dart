@@ -21,6 +21,7 @@ class TodoListViewModel extends _$TodoListViewModel {
   /// Todoリストを削除する。
   ///
   /// 主キー（[id]）に対応するTodoリストを削除する。
+  /// 削除後、リストを更新するためにローカルキャッシュを削除します。
   Future<void> deleteTodo(int id) async {
     // Todoの削除
     final repository = await ref.read(todoRepositoryProvider.future);

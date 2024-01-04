@@ -68,7 +68,7 @@ class TodoEditorViewModel extends _$TodoEditorViewModel {
     );
     final id = await repository.insert(todo);
 
-    // Todoリスト画面（ビューモデル）のローカルキャッシュを更新
+    // Todoリスト画面（ビューモデル）のローカルキャッシュを削除
     ref.invalidate(todoListViewModelProvider);
 
     // 終了処理
@@ -97,7 +97,7 @@ class TodoEditorViewModel extends _$TodoEditorViewModel {
     );
     final id = await repository.update(todo);
 
-    // Todoリスト画面（ビューモデル）のローカルキャッシュを更新
+    // Todoリスト画面（ビューモデル）のローカルキャッシュを削除
     ref.invalidate(todoListViewModelProvider);
 
     // 終了処理
