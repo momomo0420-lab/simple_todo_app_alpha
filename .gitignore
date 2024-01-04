@@ -49,3 +49,4 @@ app.*.map.json
 /lib/data/model/todo.g.dart
 /lib/ui/todo_list/todo_list_state.freezed.dart
 /lib/ui/todo_list/todo_list_view_model.g.dart
+/lib/ui/todo_list/todo_list_future_view_model.g.dart

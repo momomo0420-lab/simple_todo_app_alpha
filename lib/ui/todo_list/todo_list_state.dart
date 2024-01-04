@@ -9,7 +9,7 @@ class TodoListState with _$TodoListState {
   /// Todoリスト画面の状態を生成する。
   const factory TodoListState({
     /// Todoリスト
-    @Default(null)
-    List<Todo>? todoList,
+    @Default([])
+    List<Todo> todoList,
   }) = _TodoListState;
 }

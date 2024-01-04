@@ -2,6 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:simple_todo_app_alpha/app_container.dart';
 import 'package:simple_todo_app_alpha/data/model/todo.dart';
 import 'package:simple_todo_app_alpha/ui/todo_editor/todo_editor_state.dart';
+import 'package:simple_todo_app_alpha/ui/todo_list/todo_list_view_model.dart';
 
 part 'todo_editor_view_model.g.dart';
 
@@ -67,6 +68,9 @@ class TodoEditorViewModel extends _$TodoEditorViewModel {
     );
     final id = await repository.insert(todo);
 
+    // Todoリスト画面（ビューモデル）のローカルキャッシュを更新
+    ref.invalidate(todoListViewModelProvider);
+
     // 終了処理
     if(onSuccess != null) onSuccess(id);
   }
@@ -92,6 +96,9 @@ class TodoEditorViewModel extends _$TodoEditorViewModel {
       memo: state.memo,
     );
     final id = await repository.update(todo);
+
+    // Todoリスト画面（ビューモデル）のローカルキャッシュを更新
+    ref.invalidate(todoListViewModelProvider);
 
     // 終了処理
     if(onSuccess != null) onSuccess(id);
