@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:simple_todo_app_alpha/data/model/todo.dart';
 import 'package:simple_todo_app_alpha/ui/todo_editor/todo_editor_screen.dart';
 import 'package:simple_todo_app_alpha/ui/todo_list/todo_list_screen.dart';
@@ -26,66 +27,79 @@ class AppNavigator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: '簡単なTODOアプリ',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      routes: <String, WidgetBuilder> {
-        AppScreens.todoList.path : (BuildContext context) => _buildTodoList(context),
-        AppScreens.todoEntry.path : (BuildContext context) => _buildTodoEntry(context),
-        AppScreens.todoUpdate.path : (BuildContext context) => _buildTodoUpdate(context),
-      },
-      initialRoute: AppScreens.todoList.path,
+      routerConfig: _buildGoRouter(),
+    );
+  }
+
+  /// 画面遷移のための構成を作成します。
+  GoRouter _buildGoRouter() {
+    return GoRouter(
+      initialLocation: AppScreens.todoList.path,
+      routes: [
+        GoRoute(
+          path: AppScreens.todoList.path,
+          builder: _buildTodoList,
+        ),
+        GoRoute(
+          path: AppScreens.todoEntry.path,
+          builder: _buildTodoEntry,
+        ),
+        GoRoute(
+          path: AppScreens.todoUpdate.path,
+          builder: _buildTodoUpdate,
+        ),
+      ],
     );
   }
 
   /// Todoリスト画面を作成する。
   ///
-  /// 遷移時のパラメータとして[context]を使用する。
+  /// 遷移時のパラメータとして[context]、[state]を使用する。
   Widget _buildTodoList(
     BuildContext context,
+    GoRouterState state,
   ) {
     return TodoListScreen(
-      navigateToEntry: () => Navigator.of(context).pushNamed(AppScreens.todoEntry.path),
-      navigateToUpdate: (todo) => Navigator.of(context).pushNamed(
+      navigateToEntry: () => context.push(AppScreens.todoEntry.path),
+      navigateToUpdate: (todo) => context.push(
         AppScreens.todoUpdate.path,
-        arguments: todo,
+        extra: todo,
       ),
     );
   }
 
   /// Todo登録画面を作成する。
   ///
-  /// 遷移時のパラメータとして[context]を使用する。
+  /// 遷移時のパラメータとして[context]、[state]を使用する。
   Widget _buildTodoEntry(
     BuildContext context,
+    GoRouterState state,
   ) {
     return TodoEditorScreen(
-      navigateBack: () => Navigator.of(context).pushNamedAndRemoveUntil(
-        AppScreens.todoList.path,
-        (route) => false,
-      ),
+      navigateBack: () => context.go(AppScreens.todoList.path),
     );
   }
 
   /// Todo更新画面を作成する。
   ///
-  /// 遷移時のパラメータとして[context]を使用する。
+  /// 遷移時のパラメータとして[context]、[state]を使用する。
   /// ※現状登録画面を流用しています。
   Widget _buildTodoUpdate(
     BuildContext context,
+    GoRouterState state,
   ) {
     // 前の画面で選択されたTodoを取得する。
-    final todo = ModalRoute.of(context)?.settings.arguments as Todo?;
+    final todo = state.extra as Todo;
 
     return TodoEditorScreen(
       todo: todo,
-      navigateBack: () => Navigator.of(context).pushNamedAndRemoveUntil(
-        AppScreens.todoList.path,
-        (route) => false
-      ),
+      navigateBack: () => context.go(AppScreens.todoList.path),
     );
   }
 }

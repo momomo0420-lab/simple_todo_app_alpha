@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:simple_todo_app_alpha/data/model/todo.dart';
-import 'package:simple_todo_app_alpha/ui/todo_list/todo_list_state.dart';
 import 'package:simple_todo_app_alpha/ui/todo_list/todo_list_view_model.dart';
+import 'package:simple_todo_app_alpha/ui/todo_list/todo_list_state.dart';
 
 /// Todoリスト画面の本体
-class TodoListBody extends StatefulWidget {
+class TodoListBody extends StatelessWidget {
   // 状態
-  final TodoListState _state;
+  final AsyncValue<TodoListState> _state;
   // ビューモデル
   final TodoListViewModel _viewModel;
   // Todoが押下された場合の動作
@@ -18,7 +19,7 @@ class TodoListBody extends StatefulWidget {
   /// またTodo押下時、[onTodoTap]を実行する。
   const TodoListBody({
     super.key,
-    required TodoListState state,
+    required AsyncValue<TodoListState> state,
     required TodoListViewModel viewModel,
     Function(Todo)? onTodoTap,
   }): _state = state,
@@ -26,42 +27,37 @@ class TodoListBody extends StatefulWidget {
         _onTodoTap = onTodoTap;
 
   @override
-  State<TodoListBody> createState() => _TodoListBodyState();
-}
-
-class _TodoListBodyState extends State<TodoListBody> {
-  @override
-  void initState() {
-    super.initState();
-
-    // 初回描画時にTodoリストを読み込んでおく。
-    widget._viewModel.loadTodoList();
+  Widget build(BuildContext context) {
+    return _state.when(
+      data: buildDataWidget,
+      error: buildErrorWidget,
+      loading: buildLoadingWidget,
+    );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    // ビューモデル
-    final viewModel = widget._viewModel;
-    // 状態
-    final state = widget._state;
-    // Todoリスト
-    final todoList = state.todoList;
-    // Todo押下時の動作
-    final onTodoTap = widget._onTodoTap;
-
-    // Todoの読み込みが完了していない場合、グルグルを表示する。
-    if(todoList == null) {
-      return const Center(child: CircularProgressIndicator());
-    }
-
-    // Todoリストを作成し返却する。
+  /// 読み込んだデータを元にTodoリスト画面を作成する。
+  ///
+  /// [state]の読み込みが完了している場合、そのデータを使用し、
+  /// Todoリストを作成する。
+  Widget buildDataWidget(TodoListState state) {
     return _buildTodoList(
-      todoList,
-      onTap: onTodoTap,
-      onDelete: (id) => viewModel.deleteTodo(
-        id,
-        onSuccess: () => viewModel.loadTodoList(),
-      ),
+      state.todoList,
+      onTap: _onTodoTap,
+      onDelete: (id) => _viewModel.deleteTodo(id),
+    );
+  }
+
+  /// ローディング画面を作成する。
+  Widget buildLoadingWidget() {
+    return const Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+
+  /// エラー時の画面を作成する。
+  Widget buildErrorWidget(Object error, StackTrace stackTrace) {
+    return const Center(
+      child: Text('読み込みに失敗しました。'),
     );
   }
 
