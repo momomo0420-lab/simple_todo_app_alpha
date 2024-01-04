@@ -37,7 +37,7 @@ class AppNavigator extends StatelessWidget {
     );
   }
 
-  /// 画面遷移のための構成を作成します。
+  /// 画面遷移のための構成を作成する。
   GoRouter _buildGoRouter() {
     return GoRouter(
       initialLocation: AppScreens.todoList.path,

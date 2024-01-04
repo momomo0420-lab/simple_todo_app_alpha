@@ -47,7 +47,7 @@ class TodoListBody extends StatelessWidget {
     );
   }
 
-  /// ローディング画面を作成する。
+  /// ロード中の画面を作成する。
   Widget buildLoadingWidget() {
     return const Center(
       child: CircularProgressIndicator(),
